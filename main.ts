@@ -11,10 +11,9 @@ const client = await new Client().connect({
 const meetings = new Map<string, meeting>();
 const results = await client.execute("SELECT * FROM meetings");
 for (const row of results.iterator()) {
-  meetings.set(row.id, row);
+  const [id, title, startDate, startTime] = row;
+  meetings.set(id, {title, startDate, startTime, participants: []});
 }
-
-// need to point api.timetomeet.ca to reverse proxy to localhost:8000
 
 type meeting = {
   title: string,
@@ -29,9 +28,6 @@ type participant = {
   email?: string,
   password?: string, // optional only if a user opts in to edit their meeting times
 }
-
-// const meetings = new Map<string, meeting>();
-// eventually this will be a database, but for now it's just a map
 
 meetings.set("1", { // reference to meeting
   title: "Meeting Name",
