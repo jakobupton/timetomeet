@@ -6,6 +6,7 @@ const client = await new Client().connect({
   username: "root",
   db: "timetomeet",
   password: "password",
+  port: 3306,
 });
 
 const meetings = new Map<string, meeting>();
